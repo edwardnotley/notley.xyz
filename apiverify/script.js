@@ -3,22 +3,23 @@ document.getElementById("inputForm").addEventListener("submit", function(event) 
 
     const inputText = document.getElementById("inputText").value;
 
-    // Example of an API call using fetch. Replace with the actual API URL and request format.
-    fetch('https://api.example.com/check', {
+    // Example of an API call using ReqBin's test API endpoint
+    fetch('https://api.reqbin.com/v1/echo/post/json', {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer your_api_key'  // Add your authorization token if required
+            'Content-Type': 'application/json'
         },
         body: JSON.stringify({ text: inputText })
     })
     .then(response => response.json())
     .then(data => {
-        // Assuming the API returns an object with a "link" field
-        const link = data.link;
-        document.getElementById("apiLink").href = link;
-        document.getElementById("apiLink").textContent = link;
+        // ReqBin will echo back the data you sent, for testing purposes
+        const responseText = JSON.stringify(data);
+        const apiLink = "https://reqbin.com"; // This can be replaced with an actual link from the API response
+        document.getElementById("apiLink").href = apiLink;
+        document.getElementById("apiLink").textContent = apiLink;
         document.getElementById("responseLink").style.display = 'block';
+        console.log("Response from ReqBin:", responseText);  // For debugging purposes
     })
     .catch(error => {
         console.error("Error:", error);
