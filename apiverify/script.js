@@ -3,23 +3,22 @@ document.getElementById("inputForm").addEventListener("submit", function(event) 
 
     const inputText = document.getElementById("inputText").value;
 
-    // Example of an API call using ReqBin's test API endpoint
-    fetch('https://api.reqbin.com/v1/echo/post/json', {
+    // Example of an API call using JSONPlaceholder for testing
+    fetch('https://jsonplaceholder.typicode.com/posts', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ text: inputText })
+        body: JSON.stringify({ title: inputText })
     })
     .then(response => response.json())
     .then(data => {
-        // ReqBin will echo back the data you sent, for testing purposes
-        const responseText = JSON.stringify(data);
-        const apiLink = "https://reqbin.com"; // This can be replaced with an actual link from the API response
+        // JSONPlaceholder returns an ID with the data submitted
+        const apiLink = `https://jsonplaceholder.typicode.com/posts/${data.id}`;
         document.getElementById("apiLink").href = apiLink;
         document.getElementById("apiLink").textContent = apiLink;
         document.getElementById("responseLink").style.display = 'block';
-        console.log("Response from ReqBin:", responseText);  // For debugging purposes
+        console.log("Response from JSONPlaceholder:", data);  // For debugging purposes
     })
     .catch(error => {
         console.error("Error:", error);
