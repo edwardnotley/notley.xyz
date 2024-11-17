@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/style.css">
+    <title>Travel Expenses</title>
+</head>
+<body>
+    <h1>Travel Expenses Form</h1>
+    <form method="POST" enctype="multipart/form-data">
+        <label>Name:</label>
+        <input type="text" name="name" required><br>
+        
+        <label>Travel Purpose:</label>
+        <input type="text" name="travel_purpose" required><br><br>
+        
+        <table id="expensesTable">
+            <tr>
+                <th>Description</th>
+                <th>Date</th>
+                <th>Currency</th>
+                <th>Amount</th>
+                <th>Attachment</th>
+                <th>Action</th>
+            </tr>
+            <tr>
+                <td><input type="text" name="description"></td>
+                <td><input type="date" name="date"></td>
+                <td>
+                    <select name="currency">
+                        <option value="USD">USD</option>
+                        <option value="EUR">EUR</option>
+                        <option value="GBP">GBP</option>
+                    </select>
+                </td>
+                <td><input type="number" name="amount" step="0.01"></td>
+                <td><input type="file" name="attachment"></td>
+                <td><button type="button" onclick="removeRow(this)">Remove</button></td>
+            </tr>
+        </table>
+        <button type="button" onclick="addRow()">Add Row</button><br><br>
+        
+        <button type="submit">Save</button>
+    </form>
+
+    <script>
+        function addRow() {
+            let table = document.getElementById("expensesTable");
+            let row = table.insertRow();
+            row.innerHTML = `
+                <td><input type="text" name="description"></td>
+                <td><input type="date" name="date"></td>
+                <td>
+                    <select name="currency">
+                        <option value="USD">USD</option>
+                        <option value="EUR">EUR</option>
+                        <option value="GBP">GBP</option>
+                    </select>
+                </td>
+                <td><input type="number" name="amount" step="0.01"></td>
+                <td><input type="file" name="attachment"></td>
+                <td><button type="button" onclick="removeRow(this)">Remove</button></td>
+            `;
+        }
+
+        function removeRow(button) {
+            let row = button.parentNode.parentNode;
+            row.parentNode.removeChild(row);
+        }
+    </script>
+</body>
+</html>
