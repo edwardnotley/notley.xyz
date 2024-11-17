@@ -13,8 +13,16 @@
         <input type="text" name="name" required><br>
         
         <label>Travel Purpose:</label>
-        <input type="text" name="travel_purpose" required><br><br>
+        <input type="text" name="travel_purpose" required><br>
         
+        <label>Home Currency:</label>
+        <select name="h_currency">
+            {% for currency in currencies %}
+            <option value="{{ currency }}">{{ currency }}</option>
+            {% endfor %}
+        </select><br><br>
+        
+
         <table id="expensesTable">
             <tr>
                 <th>Description</th>
@@ -28,10 +36,10 @@
                 <td><input type="text" name="description"></td>
                 <td><input type="date" name="date"></td>
                 <td>
-                    <select name="currency">
-                        <option value="USD">USD</option>
-                        <option value="EUR">EUR</option>
-                        <option value="GBP">GBP</option>
+                    <select name="p_currency">
+                        {% for currency in currencies %}
+                        <option value="{{ currency }}">{{ currency }}</option>
+                        {% endfor %}
                     </select>
                 </td>
                 <td><input type="number" name="amount" step="0.01"></td>
@@ -45,6 +53,8 @@
     </form>
 
     <script>
+        const currencies = {{ currencies|tojson }}; // Pass currencies as JSON for dynamic rows
+
         function addRow() {
             let table = document.getElementById("expensesTable");
             let row = table.insertRow();
@@ -53,9 +63,7 @@
                 <td><input type="date" name="date"></td>
                 <td>
                     <select name="currency">
-                        <option value="USD">USD</option>
-                        <option value="EUR">EUR</option>
-                        <option value="GBP">GBP</option>
+                        ${currencies.map(currency => `<option value="${currency}">${currency}</option>`).join('')}
                     </select>
                 </td>
                 <td><input type="number" name="amount" step="0.01"></td>
